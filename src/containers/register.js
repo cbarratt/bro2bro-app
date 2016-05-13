@@ -22,6 +22,7 @@ class Register extends Component {
       email: "",
       password: "",
       error: "",
+      errors: [],
       showProgress: false,
     }
   }
@@ -35,10 +36,8 @@ class Register extends Component {
   storeToken(responseData) {
     AsyncStorage.setItem('access_token', responseData, (err) => {
       if (err) {
-        console.log("an error");
         throw err;
       }
-      console.log("success");
     }).catch((err) => {
       console.log("error is: " + err);
     });
@@ -80,13 +79,21 @@ class Register extends Component {
         this.setState({error: ""});
         this.redirect('home');
       } else {
-        let error = JSON.parse(res);
-        console.log(error);
+        const errors = JSON.parse(res).errors;
+
+        let errorMessages = [];
+
+        errors.map(error => {
+          const key = Object.keys(error)[0];
+          errorMessages.push(`${key} ${error[key]}`);
+        });
+
+        this.setState({errors: errorMessages});
+
         throw error;
       }
     } catch(error) {
       this.setState({error: error});
-      console.log("error " + error);
       this.setState({showProgress: false});
     }
   }
@@ -140,7 +147,7 @@ class Register extends Component {
           </Text>
         </TouchableHighlight>
 
-
+        <Errors errors={this.state.errors}/>
 
         <ActivityIndicatorIOS animating={this.state.showProgress} size="large" style={styles.loader} />
       </View>
