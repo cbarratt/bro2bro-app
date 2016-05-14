@@ -158,7 +158,7 @@ class Register extends Component {
 const Errors = (props) => {
   return (
     <View>
-      {props.errors.map((error, i) => <Text key={i}> {error} </Text>)}
+      {props.errors.map((error, i) => <Text style={styles.error} key={i}> {error} </Text>)}
     </View>
   );
 }
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    paddingTop: 10
+    paddingTop: 5
   },
   success: {
     color: 'green',

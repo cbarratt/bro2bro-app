@@ -49,11 +49,11 @@ class Root extends Component {
       if (response.status >= 200 && response.status < 300) {
         this.navigate('home');
       } else {
-          let error = res;
-          throw error;
+        let error = res;
+        throw error;
       }
     } catch(error) {
-        console.log("error response: " + error);
+      console.log("error response: " + error);
     }
   }
 
